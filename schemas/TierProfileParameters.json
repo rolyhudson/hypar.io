@@ -1,1 +1,31 @@
-{"x-namespace": "Elements", "required": [], "properties": {"Area": {"description": "The area to allocate at this location", "type": "number", "$hyparUnitType": "area"}, "Program Name": {"description": "The name of the program type to allocate at this location.", "type": "string"}}, "additionalProperties": false, "description": "Used to indicate the approximate location of a specific program group or department.", "allOf": [{"$ref": "https://schemas.hypar.io/GeometricElement.json"}], "$id": "ProgramHandle", "$schema": "http://json-schema.org/draft-07/schema#", "discriminator": "discriminator", "type": "object", "title": "ProgramHandle"}
+{
+  "$id": "TierProfileParameters",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A horizontal planar datum indicating a site boundary.",
+  "title": "TierProfileParameters",
+  "x-namespace": "Elements",
+  "type": [ "object", "null" ],
+  "required": [ "discriminator", "Perimeter" ],
+  "discriminator": "discriminator",
+  "properties": {
+    "discriminator": {
+      "type": "string"
+    },
+    "Start X": {
+      "type": "number"
+    },
+    "Start Z": {
+      "type": "number"
+    },
+    "Row depth": {
+      "type": "number"
+    },
+    "CValue": {
+      "type": "number"
+    },
+    "Number of rows": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": false
+}
