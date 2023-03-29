@@ -1,5 +1,5 @@
 {
-  "$id": "TierProfileParameters",
+  "$id": "https://raw.githubusercontent.com/rolyhudson/hypar.io/main/schemas/TierProfileParameters.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "description": "A horizontal planar datum indicating a site boundary.",
   "title": "TierProfileParameters",
