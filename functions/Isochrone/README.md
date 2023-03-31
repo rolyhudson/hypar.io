@@ -2,7 +2,7 @@
 
 # Isochrone
 
-Simple isochrone compute best for interior spaces. 
+Simple isochrone compute with BHoM dlls.
 
 |Input Name|Type|Description|
 |---|---|---|

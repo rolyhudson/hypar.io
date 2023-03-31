@@ -20,7 +20,7 @@ namespace Isochrone
             var input = GetInput();
 
             var modelDependencies = new Dictionary<string, Model> { 
-                {"Links", Model.FromJson(File.ReadAllText(@"C:\Users\rhudson\source\repos\hypar.io\functions\Isochrone\test\Generated\IsochroneTest\model_dependencies\Links\2b7f53b2-345f-4e18-b42c-1eb571cc7934.json")) }, 
+                {"Links", Model.FromJson(File.ReadAllText(@"C:\Users\rhudson\source\repos\hypar.io\functions\Isochrone\test\Generated\IsochroneTest\model_dependencies\Links\817de2e2-f2ae-4e41-8fcf-8ce6fded8e39.json")) }, 
             };
 
             var result = Isochrone.Execute(modelDependencies, input);

@@ -3,7 +3,7 @@
   "id": "3a96ede2-1e14-4a30-85a2-8de2bc324298",
   "name": "Isochrone",
   "display_name": "Isochrone",
-  "description": "Simple isochrone compute best for interior spaces. ",
+  "description": "Simple isochrone compute with BHoM dlls.",
   "language": "C#",
   "model_dependencies": [
     {

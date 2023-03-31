@@ -1,5 +1,11 @@
 {
+  "Time band": 300,
+  "Visualisation method": "Render graph link lines",
+  "Closest point to start": {
+    "X": 375772.02110457054,
+    "Y": 3756827.0712027163,
+    "Z": 2.4513724383723456E-13
+  },
   "Travel speed": 1.5,
-  "Time band": 5,
-  "Visualisation method": "Render graph link lines"
+  "Node radius": 0.5
 }

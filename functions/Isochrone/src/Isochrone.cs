@@ -40,7 +40,7 @@ namespace Isochrone
             List<BH_oM_Geo.ICurve> connectingCurves = new List<BH_oM_Geo.ICurve>();
             foreach (var modelCurve in modelCurves)
             {
-                connectingCurves.Add(modelCurve.Curve.ToBHoMCurve());
+                connectingCurves.Add(modelCurve.Curve.ToBHoM());
             }
 
             //Create the graph
@@ -78,7 +78,7 @@ namespace Isochrone
                 foreach (var curve in group)
                 {
                     var col = new Color(System.Drawing.Color.FromArgb(m_Colors[g][0], m_Colors[g][1], m_Colors[g][2]));
-                    ModelCurve modelCurve = new ModelCurve(curve.ToHyparLine(), new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
+                    ModelCurve modelCurve = new ModelCurve(curve.ToHypar(), new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
                     curves.Add(modelCurve);
                 }
                 g++;
@@ -99,7 +99,7 @@ namespace Isochrone
                 {
                     
                     var col = new Color(System.Drawing.Color.FromArgb(m_Colors[g][0], m_Colors[g][1], m_Colors[g][2]));
-                    var dot = new Elements.Geometry.Circle(point.Node.Position.ToHyparPoint(), radius);
+                    var dot = new Elements.Geometry.Circle(point.Node.Position.ToHypar(), radius);
                     ModelCurve modelCurve = new ModelCurve(dot, new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
                     //ModelPoint 
                     points.Add(modelCurve);
@@ -113,7 +113,7 @@ namespace Isochrone
 
         private static BH.oM.SpaceSyntax.Node FindStartNode(Graph graph, Vector3 point)
         {
-            Point sPoint = point.ToBHoMPoint();
+            Point sPoint = point.ToBHoM();
             BH.oM.SpaceSyntax.Node start = new BH.oM.SpaceSyntax.Node();
             double minSq = double.MaxValue;
             foreach(var entity in graph.Entities)
@@ -144,31 +144,6 @@ namespace Isochrone
             new List<int>(){243,57,0} 
         };
 
-        ///////////////////////////////////////////////////
-        ///BHoM to hypar converts 
-
-        private static BH_oM_Geo.ICurve ToBHoMCurve(this Curve curve)
-        {
-            Elements.Geometry.Polyline pl = curve.ToPolyline(1);
-            return BH.Engine.Geometry.Create.Line(pl.Vertices[0].ToBHoMPoint(), pl.Vertices.Last().ToBHoMPoint());
-        }
-
-        private static BH_oM_Geo.Point ToBHoMPoint(this Vector3 vector3)
-        {
-            return BH.Engine.Geometry.Create.Point(vector3.X, vector3.Y, vector3.Z);    
-        }
-
-        ///////////////////////////////////////////////////
-        ///hypar to BHoM converts
-
-        private static Vector3 ToHyparPoint(this Point point)
-        {
-            return new Vector3(point.X, point.Y, point.Z);
-        }
-
-        private static Elements.Geometry.Line ToHyparLine(this ICurve curve)
-        {
-            return new Elements.Geometry.Line(curve.IStartPoint().ToHyparPoint(),curve.IEndPoint().ToHyparPoint());
-        }
+        
     }
 }
