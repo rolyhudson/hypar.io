@@ -1,0 +1,66 @@
+{
+  "$schema": "https://hypar.io/Schemas/Function.json",
+  "id": "3a96ede2-1e14-4a30-85a2-8de2bc324298",
+  "name": "Isochrone",
+  "display_name": "Isochrone",
+  "description": "Simple isochrone compute best for interior spaces. ",
+  "language": "C#",
+  "model_dependencies": [
+    {
+      "autohide": false,
+      "name": "Streets",
+      "optional": false
+    }
+  ],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "Travel speed": {
+        "multipleOf": 0.1,
+        "default": 1.5,
+        "maximum": 20,
+        "description": "Travel speed in metres per second",
+        "$hyparUnitType": "speed",
+        "type": "number",
+        "$hyparOrder": 0,
+        "minimum": 0
+      },
+      "Time band": {
+        "multipleOf": 1,
+        "default": 300,
+        "maximum": 1000,
+        "description": "Time of travel per isochrone band in seconds",
+        "$hyparUnitType": "time",
+        "type": "number",
+        "$hyparOrder": 1,
+        "minimum": 5
+      },
+      "Visualisation method": {
+        "description": "Select lines or nodes for visualisation",
+        "type": "string",
+        "$hyparOrder": 2,
+        "enum": [
+          "Render graph link lines",
+          "Render graph nodes"
+        ]
+      }
+    }
+  },
+  "outputs": [
+    {
+      "unit_type": "none",
+      "name": "linecount",
+      "description": "number of rhino lines",
+      "type": "number"
+    },
+    {
+      "name": "report",
+      "description": "report function progress",
+      "type": "string"
+    }
+  ],
+  "repository_url": "",
+  "filters": {},
+  "last_updated": "2023-03-31T07:23:36.184564",
+  "cli_version": "1.6.0-alpha.0"
+}
