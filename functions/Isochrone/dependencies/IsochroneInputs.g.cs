@@ -29,19 +29,20 @@ namespace Isochrone
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public IsochroneInputs(double @timeBand, IsochroneInputsVisualisationMethod @visualisationMethod, Vector3 @closestPointToStart, double @travelSpeed, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public IsochroneInputs(double @timeBand, IsochroneInputsVisualisationMethod @visualisationMethod, Vector3 @closestPointToStart, double @travelSpeed, double @nodeRadius, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<IsochroneInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @timeBand, @visualisationMethod, @closestPointToStart, @travelSpeed});
+                validator.PreConstruct(new object[]{ @timeBand, @visualisationMethod, @closestPointToStart, @travelSpeed, @nodeRadius});
             }
         
             this.TimeBand = @timeBand;
             this.VisualisationMethod = @visualisationMethod;
             this.ClosestPointToStart = @closestPointToStart;
             this.TravelSpeed = @travelSpeed;
+            this.NodeRadius = @nodeRadius;
         
             if(validator != null)
             {
@@ -67,6 +68,11 @@ namespace Isochrone
         [Newtonsoft.Json.JsonProperty("Travel speed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 20D)]
         public double TravelSpeed { get; set; } = 1.5D;
+    
+        /// <summary>Radius of node used in result visualisation</summary>
+        [Newtonsoft.Json.JsonProperty("Node radius", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0.1D, 10D)]
+        public double NodeRadius { get; set; } = 0.5D;
     
     }
     

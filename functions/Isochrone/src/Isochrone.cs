@@ -63,7 +63,7 @@ namespace Isochrone
                 output.Model.AddElements(IsoCurves(mainGraph, start, input.TravelSpeed, input.TimeBand));
 
             else
-                output.Model.AddElements(IsoNodes(mainGraph, start, input.TravelSpeed, input.TimeBand));
+                output.Model.AddElements(IsoNodes(mainGraph, start, input.TravelSpeed, input.TimeBand, input.NodeRadius));
             return output;
             //hypar test generate --workflow-id=59c4ea6b-a938-441c-8b8a-37f4667b76ba
         }
@@ -88,19 +88,21 @@ namespace Isochrone
             return curves;
         }
 
-        private static List<ModelPoints> IsoNodes(Graph graph, BH.oM.SpaceSyntax.Node start, double speed, double timeband)
+        private static List<ModelCurve> IsoNodes(Graph graph, BH.oM.SpaceSyntax.Node start, double speed, double timeband, double radius)
         {
             var pointGroups = BH.Engine.SpaceSyntax.Compute.IsochronePointSet(graph, start, speed, timeband);
-            List<ModelPoints> points = new List<ModelPoints>();
+            List<ModelCurve> points = new List<ModelCurve>();
             int g = 0;
             foreach (var group in pointGroups)
             {
                 foreach (var point in group)
                 {
+                    
                     var col = new Color(System.Drawing.Color.FromArgb(m_Colors[g][0], m_Colors[g][1], m_Colors[g][2]));
-                    //ModelCurve modelCurve = new ModelCurve(curve.ToHyparLine(), new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
+                    var dot = new Elements.Geometry.Circle(point.Node.Position.ToHyparPoint(), radius);
+                    ModelCurve modelCurve = new ModelCurve(dot, new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
                     //ModelPoint 
-                    //curves.Add(modelCurve);
+                    points.Add(modelCurve);
                 }
                 g++;
                 if (g > m_Colors.Count - 1)

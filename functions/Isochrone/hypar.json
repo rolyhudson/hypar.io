@@ -48,6 +48,16 @@
         "type": "number",
         "$hyparOrder": 1,
         "minimum": 0
+      },
+      "Node radius": {
+        "multipleOf": 0.1,
+        "default": 0.5,
+        "maximum": 10,
+        "description": "Radius of node used in result visualisation",
+        "$hyparUnitType": "length",
+        "type": "number",
+        "$hyparOrder": 4,
+        "minimum": 0.1
       }
     }
   },
