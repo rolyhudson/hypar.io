@@ -6,22 +6,19 @@
 
   <ItemGroup>
     <Reference Include="Analytical_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Analytical_Engine.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_Engine.dll</HintPath>
     </Reference>
     <Reference Include="BHoM_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
     </Reference>
     <Reference Include="Geometry_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Geometry_Engine.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_Engine.dll</HintPath>
     </Reference>
     <Reference Include="SpaceSyntax_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\SpaceSyntax_Engine.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\SpaceSyntax_Engine.dll</HintPath>
     </Reference>
     <Reference Include="SpaceSyntax_oM">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\SpaceSyntax_oM.dll</HintPath>
-    </Reference>
-    <Reference Include="Structure_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\SpaceSyntax_oM.dll</HintPath>
     </Reference>
   </ItemGroup>
 

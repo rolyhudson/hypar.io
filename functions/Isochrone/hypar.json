@@ -8,23 +8,13 @@
   "model_dependencies": [
     {
       "autohide": false,
-      "name": "Streets",
+      "name": "Links",
       "optional": false
     }
   ],
   "input_schema": {
     "type": "object",
     "properties": {
-      "Travel speed": {
-        "multipleOf": 0.1,
-        "default": 1.5,
-        "maximum": 20,
-        "description": "Travel speed in metres per second",
-        "$hyparUnitType": "speed",
-        "type": "number",
-        "$hyparOrder": 0,
-        "minimum": 0
-      },
       "Time band": {
         "multipleOf": 1,
         "default": 300,
@@ -32,17 +22,32 @@
         "description": "Time of travel per isochrone band in seconds",
         "$hyparUnitType": "time",
         "type": "number",
-        "$hyparOrder": 1,
+        "$hyparOrder": 2,
         "minimum": 5
       },
       "Visualisation method": {
         "description": "Select lines or nodes for visualisation",
         "type": "string",
-        "$hyparOrder": 2,
+        "$hyparOrder": 3,
         "enum": [
           "Render graph link lines",
           "Render graph nodes"
         ]
+      },
+      "Closest point to start": {
+        "$hyparOrder": 0,
+        "description": "Pick a point close to where the isochrone should start from",
+        "$ref": "https://hypar.io/Schemas/Geometry/Vector3.json"
+      },
+      "Travel speed": {
+        "multipleOf": 0.1,
+        "default": 1.5,
+        "maximum": 20,
+        "description": "Travel speed in metres per second",
+        "$hyparUnitType": "speed",
+        "type": "number",
+        "$hyparOrder": 1,
+        "minimum": 0
       }
     }
   },
@@ -59,8 +64,8 @@
       "type": "string"
     }
   ],
-  "repository_url": "",
+  "repository_url": "https://github.com/rolyhudson/hypar.io/tree/main/functions/Isochrone",
   "filters": {},
-  "last_updated": "2023-03-31T07:23:36.184564",
+  "last_updated": "2023-03-31T08:41:03.865811",
   "cli_version": "1.6.0-alpha.0"
 }

@@ -1,4 +1,5 @@
 {
   "Travel speed": 1.5,
-  "Time band": 5
+  "Time band": 5,
+  "Visualisation method": "Render graph link lines"
 }

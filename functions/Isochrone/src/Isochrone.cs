@@ -10,6 +10,8 @@ using BH.Engine.SpaceSyntax;
 using Amazon.S3.Model.Internal.MarshallTransformations;
 using BH.oM.Geometry;
 using BH.Engine.Geometry;
+using BH.oM.Base;
+using BH.oM.Dimensional;
 
 namespace Isochrone
 {
@@ -24,11 +26,11 @@ namespace Isochrone
         public static IsochroneOutputs Execute(Dictionary<string, Model> inputModels, IsochroneInputs input)
         {
             var output = new IsochroneOutputs();
-            inputModels.TryGetValue("Streets", out var model);
+            inputModels.TryGetValue("Links", out var model);
 
             if (model == null || model.AllElementsOfType<ModelCurve>().Count() == 0)
             {
-                output.Errors.Add($"No street network found.");
+                output.Errors.Add($"No travel network found.");
                 return output;
             }
             var modelCurves = model.AllElementsOfType<ModelCurve>();
@@ -54,10 +56,22 @@ namespace Isochrone
                     mainGraph = subgraph;
             }
             report += "graph constructed with " + mainGraph.Entities.Count + "entities\n";
-            var start = (BH.oM.SpaceSyntax.Node)mainGraph.Entity("node_697");
-            var curveGroups = BH.Engine.SpaceSyntax.Compute.IsochroneCurveSet(mainGraph, start, input.TravelSpeed, input.TimeBand);
-            report += "Isochrone computed with " + curveGroups.Count + "zone bands\n";
-            output = new IsochroneOutputs(modelCurves.Count(), report);
+            var start = FindStartNode(mainGraph, input.ClosestPointToStart);
+            List<ModelCurve> curves = new List<ModelCurve>();
+
+            if(input.VisualisationMethod == IsochroneInputsVisualisationMethod.Render_graph_link_lines)
+                output.Model.AddElements(IsoCurves(mainGraph, start, input.TravelSpeed, input.TimeBand));
+
+            else
+                output.Model.AddElements(IsoNodes(mainGraph, start, input.TravelSpeed, input.TimeBand));
+            return output;
+            //hypar test generate --workflow-id=59c4ea6b-a938-441c-8b8a-37f4667b76ba
+        }
+
+        private static List<ModelCurve> IsoCurves(Graph graph, BH.oM.SpaceSyntax.Node start, double speed, double timeband)
+        {
+            var curveGroups = BH.Engine.SpaceSyntax.Compute.IsochroneCurveSet(graph, start, speed, timeband);
+            List<ModelCurve> curves = new List<ModelCurve>();
             int g = 0;
             foreach (var group in curveGroups)
             {
@@ -65,14 +79,53 @@ namespace Isochrone
                 {
                     var col = new Color(System.Drawing.Color.FromArgb(m_Colors[g][0], m_Colors[g][1], m_Colors[g][2]));
                     ModelCurve modelCurve = new ModelCurve(curve.ToHyparLine(), new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
-                    output.Model.AddElement(modelCurve);
+                    curves.Add(modelCurve);
                 }
                 g++;
                 if (g > m_Colors.Count - 1)
                     g = 0;
             }
+            return curves;
+        }
 
-            return output;
+        private static List<ModelPoints> IsoNodes(Graph graph, BH.oM.SpaceSyntax.Node start, double speed, double timeband)
+        {
+            var pointGroups = BH.Engine.SpaceSyntax.Compute.IsochronePointSet(graph, start, speed, timeband);
+            List<ModelPoints> points = new List<ModelPoints>();
+            int g = 0;
+            foreach (var group in pointGroups)
+            {
+                foreach (var point in group)
+                {
+                    var col = new Color(System.Drawing.Color.FromArgb(m_Colors[g][0], m_Colors[g][1], m_Colors[g][2]));
+                    //ModelCurve modelCurve = new ModelCurve(curve.ToHyparLine(), new Material(g.ToString(), col) { EdgeDisplaySettings = new EdgeDisplaySettings { LineWidth = 5 } });
+                    //ModelPoint 
+                    //curves.Add(modelCurve);
+                }
+                g++;
+                if (g > m_Colors.Count - 1)
+                    g = 0;
+            }
+            return points;
+        }
+
+        private static BH.oM.SpaceSyntax.Node FindStartNode(Graph graph, Vector3 point)
+        {
+            Point sPoint = point.ToBHoMPoint();
+            BH.oM.SpaceSyntax.Node start = new BH.oM.SpaceSyntax.Node();
+            double minSq = double.MaxValue;
+            foreach(var entity in graph.Entities)
+            {
+                var n = (BH.oM.SpaceSyntax.Node)entity.Value;
+                
+                double sqd = n.Position.SquareDistance(sPoint);
+                if(sqd < minSq) 
+                { 
+                    minSq = sqd;
+                    start = n;
+                }
+            }
+            return start;
         }
 
         private static List<List<int>> m_Colors = new List<List<int>>()
@@ -102,6 +155,9 @@ namespace Isochrone
         {
             return BH.Engine.Geometry.Create.Point(vector3.X, vector3.Y, vector3.Z);    
         }
+
+        ///////////////////////////////////////////////////
+        ///hypar to BHoM converts
 
         private static Vector3 ToHyparPoint(this Point point)
         {

@@ -29,29 +29,25 @@ namespace Isochrone
     {
         [Newtonsoft.Json.JsonConstructor]
         
-        public IsochroneInputs(double @travelSpeed, double @timeBand, IsochroneInputsVisualisationMethod @visualisationMethod, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
+        public IsochroneInputs(double @timeBand, IsochroneInputsVisualisationMethod @visualisationMethod, Vector3 @closestPointToStart, double @travelSpeed, string bucketName, string uploadsBucket, Dictionary<string, string> modelInputKeys, string gltfKey, string elementsKey, string ifcKey):
         base(bucketName, uploadsBucket, modelInputKeys, gltfKey, elementsKey, ifcKey)
         {
             var validator = Validator.Instance.GetFirstValidatorForType<IsochroneInputs>();
             if(validator != null)
             {
-                validator.PreConstruct(new object[]{ @travelSpeed, @timeBand, @visualisationMethod});
+                validator.PreConstruct(new object[]{ @timeBand, @visualisationMethod, @closestPointToStart, @travelSpeed});
             }
         
-            this.TravelSpeed = @travelSpeed;
             this.TimeBand = @timeBand;
             this.VisualisationMethod = @visualisationMethod;
+            this.ClosestPointToStart = @closestPointToStart;
+            this.TravelSpeed = @travelSpeed;
         
             if(validator != null)
             {
                 validator.PostConstruct(this);
             }
         }
-    
-        /// <summary>Travel speed in metres per second</summary>
-        [Newtonsoft.Json.JsonProperty("Travel speed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0D, 20D)]
-        public double TravelSpeed { get; set; } = 1.5D;
     
         /// <summary>Time of travel per isochrone band in seconds</summary>
         [Newtonsoft.Json.JsonProperty("Time band", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -62,6 +58,15 @@ namespace Isochrone
         [Newtonsoft.Json.JsonProperty("Visualisation method", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public IsochroneInputsVisualisationMethod VisualisationMethod { get; set; }
+    
+        /// <summary>Pick a point close to where the isochrone should start from</summary>
+        [Newtonsoft.Json.JsonProperty("Closest point to start", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Vector3 ClosestPointToStart { get; set; }
+    
+        /// <summary>Travel speed in metres per second</summary>
+        [Newtonsoft.Json.JsonProperty("Travel speed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, 20D)]
+        public double TravelSpeed { get; set; } = 1.5D;
     
     }
     
